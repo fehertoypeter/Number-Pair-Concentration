@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+    
+    <div id="gameContainer">
+    <div id="nav-bar">
+        <div id="settings-button">          
+             <button id="check-button" class="input-button"><i class="fa-solid fa-gear"></i></button>
+        </div>           
+        <div id="infos">info</div>
+        <div id="timer-bar">
+        </div>        
+    </div>
+   
+    
+
+    <div id="settings">
+            <div id="digits-div">
+               <div>
+                <label for="singleDigitRowCount">1. Digits:</label>
+                <input type="number" id="singleDigitRowCount" value="20">
+                </div>
+                <div>
+                    <label for="twoDigitRowCount">2. Digits:</label>
+                    <input type="number" id="twoDigitRowCount" value="20">
+                </div>
+                <div>
+                    <label for="threeDigitRowCount">3. Digits</label>
+                    <input type="number" id="threeDigitRowCount" value="50">
+                </div>          
+            </div>
+            <div id="digits-div">
+            <div>
+                 <label for="numberCount">Digits / Row</label>
+                <input type="number" id="numberCount" value="6">
+            </div>
+            
+            </div>
+            <div id="digits-div">
+            
+            <div>
+                <label for="timer">Timer(sec):</label>
+                <input type="number" id="timer" value="180">
+            </div>
+            </div>
+    </div>
+        
+        <div id="game-container">
+
+        </div>
+        <div id="button-div">
+            <button id="startButton">Start</button>
+        </div>
+        
+
+        <div id="result" class="hidden">
+            <div id="result-1"></div>
+            <div id="result-2"></div>
+            <div id="result-3"></div>
+            <div id="result-4"></div>
+
+
+        </div>
+    </div>
+
+    <script>
+        const container = document.getElementById("game-container");
+        const resultMessage = document.getElementById("result");
+
+
+
+
+
+        const startButton = document.getElementById("startButton");
+        const singleDigitRowCountInput = document.getElementById("singleDigitRowCount");
+        const twoDigitRowCountInput = document.getElementById("twoDigitRowCount");
+        const threeDigitRowCountInput = document.getElementById("threeDigitRowCount");
+        const numberCountInput = document.getElementById("numberCount");
+        const timerInput = document.getElementById("timer");
+        const timerDisplay = document.getElementById("timer-bar");
+
+        const resultMessages = document.getElementById("result");
+
+        let singleDigitRowCount = 2;
+        let twoDigitRowCount = 2;
+        let threeDigitRowCount = 2;
+        let numbersPerRow = 6;
+        let foundPairs = 0;
+        let timer = 60;
+        let countdownStart = 0;
+        let countdownInterval;
+        let totalTimeForPairs = 0;
+
+        function generateGame() {
+    if (countdownInterval) {
+        clearInterval(countdownInterval);
+    }
+
+    singleDigitRowCount = parseInt(singleDigitRowCountInput.value);
+    twoDigitRowCount = parseInt(twoDigitRowCountInput.value);
+    threeDigitRowCount = parseInt(threeDigitRowCountInput.value);
+    numbersPerRow = parseInt(numberCountInput.value);
+    timer = parseInt(timerInput.value);
+    resultMessage.textContent = "";
+    foundPairs = 0;
+    totalTimeForPairs = 0;
+
+    generateRows(singleDigitRowCount, 1, 9);
+    generateRows(twoDigitRowCount, 10, 99);
+    generateRows(threeDigitRowCount, 100, 999);
+
+    startCountdown();
+}
+
+        function generateRows(rowCount, minNumber, maxNumber) {
+            for (let i = 0; i < rowCount; i++) {
+                const randomNumbers = [];
+                while (randomNumbers.length < numbersPerRow - 1) {
+                    const randomNumber = Math.floor(Math.random() * (maxNumber - minNumber + 1)) + minNumber;
+                    if (randomNumbers.indexOf(randomNumber) === -1) {
+                        randomNumbers.push(randomNumber);
+                    }
+                }
+
+                const sameNumber = randomNumbers[Math.floor(Math.random() * (numbersPerRow - 1))];
+                const gameNumbers = [...randomNumbers, sameNumber];
+
+                gameNumbers.sort(() => Math.random() - 0.5);
+
+                const row = document.createElement("div");
+                row.classList.add("row");
+
+                gameNumbers.forEach((number, index) => {
+                    const numberElement = document.createElement("div");
+                    numberElement.classList.add("number");
+                    numberElement.textContent = number;
+                    numberElement.addEventListener("click", () => {
+                        if (number === sameNumber) {
+                            numberElement.classList.add("found");
+                            foundPairs++;
+                            const elapsed = Date.now() - countdownStart;
+                            totalTimeForPairs += elapsed;
+                            const firstRealFoundPairs = (foundPairs /2);
+                            if (foundPairs === (singleDigitRowCount + twoDigitRowCount + threeDigitRowCount) * 2) {
+                                const elapsedTotal = Math.floor((Date.now() - countdownStart) / 1000);
+                                const eredmeny = (elapsedTotal / (foundPairs / 2));
+                                resultMessage.textContent = `Talált párok száma: ${firstRealFoundPairs} | Teljes idő: ${elapsedTotal} mp | Átlag egy pár idő: ${eredmeny}`;
+
+                              
+                                countdownStopped = true; // Visszaszámlálás leállítása
+                            }
+                            numberElement.classList.add("disabled");
+                        }
+                    });
+                    row.appendChild(numberElement);
+                });
+
+                container.appendChild(row);
+            }
+        }
+
+        function startCountdown() {
+    timerDisplay.textContent = `${timer}`;
+    let countdownStopped = false;
+
+    countdownInterval = setInterval(function () {
+        if (countdownStopped) {
+            return;
+        }
+
+        timer--;
+        timerDisplay.textContent = `${timer}`;
+
+        if (timer <= 0 || foundPairs === (singleDigitRowCount + twoDigitRowCount + threeDigitRowCount) * 2) {
+            countdownStopped = true;
+            const realFoundPairs = foundPairs / 2;
+            resultMessage.textContent = `Talált párok száma: ${realFoundPairs}`;
+            const elapsedTotal = Math.floor((Date.now() - countdownStart) / 1000);
+            const eredmeny = elapsedTotal / (foundPairs / 2);
+            resultMessage.innerHTML += `<br>Teljes idő: ${elapsedTotal} mp | Átlag egy pár idő: ${eredmeny}`;
+            resultMessages.classList.remove("hidden");
+            disableClicks();
+        }
+    }, 1000);
+
+    countdownStart = Date.now();
+}
+
+
+        function disableClicks() {
+            const numberElements = document.querySelectorAll(".number");
+            numberElements.forEach((element) => {
+                element.style.cursor = "not-allowed";
+            });
+        }
+
+       
+
+        startButton.addEventListener("click", generateGame);
+
+
+        const checkButton = document.getElementById("check-button");
+        const settingsDiv = document.getElementById("settings");
+
+        checkButton.addEventListener("click", () => {
+            settingsDiv.style.display = (settingsDiv.style.display === "block") ? "none" : "block";
+        });
+   
+    </script>
+    <script src="https://kit.fontawesome.com/6eef71e6fe.js" crossorigin="anonymous"></script>
+</body>
+</html>
+
