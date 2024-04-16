@@ -1,240 +1,182 @@
 body {
-            font-family: 'Roboto', 'Helvetica', sans-serif;
-    text-align: center;
-    background: #ffffff; /* Háttérszín hozzáadva */
-    margin: 0;
-    padding: 0;
-        }
+  font-family: "Roboto", "Helvetica", sans-serif;
+  text-align: center;
+  background: #ffffff; /* Háttérszín hozzáadva */
+  margin: 0;
+  padding: 0;
+}
 
 #gameContainer {
-    border-radius: 10px;
-    box-shadow: 0px 3px 6px 0px rgb(0 0 0 / 15%), 0px 2px 4px 0px rgb(0 0 0 / 12%);
-    max-width: 100%;
-    overflow: hidden;
-    color: #223968;
-    background: #C1DFEF;
-    
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: relative;
+  border-radius: 10px;
+  box-shadow: 0px 3px 6px 0px rgb(0 0 0 / 15%), 0px 2px 4px 0px rgb(0 0 0 / 12%);
+  max-width: 100%;
+  overflow: hidden;
+  color: #223968;
+  background: #c1dfef;
+
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
 }
+
 #game-container {
-    width: 100%;
-    height: 81vh;
-
-    overflow: auto; /* A tartalom lapozhatóvá válik, ha meghaladja a game-container méretét */
-            border: 0px solid #000; /* Opcionális keret a jobb láthatóságért */
-            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.5); /* Példa árnyék beállítás */
-}
-#button-div{
-    height:10vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  width: 100%;
+  height: 81vh;
+  overflow: auto; /* A tartalom lapozhatóvá válik, ha meghaladja a game-container méretét */
+  border: 0px solid #000; /* Opcionális keret a jobb láthatóságért */
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.5); /* Példa árnyék beállítás */
 }
 
-#startButton{
-    border: none;
-    font-size: 2rem;
-    width: 300px;
-    border-radius: 15px;
-    color: #223968;
-    background: rgb(205, 218, 50);
+#button-div {
+  height: 10vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-    font-weight: 700 !important;
-    font-size: 1.2em;
-    text-transform: uppercase;
-    padding: 20px;
+#startButton {
+  border: none;
+  font-size: 2rem;
+  width: 300px;
+  border-radius: 15px;
+  color: #223968;
+  background: rgb(205, 218, 50);
+  font-weight: 700 !important;
+  font-size: 1.2em;
+  text-transform: uppercase;
+  padding: 20px;
+  bottom: 0;
+}
 
-    bottom: 0;
+#result {
+  margin-top: 10px;
+  text-align: center;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: solid;
+  border-color: white;
+  background-color: white;
+  font-size: 30px;
+  font-family: "Times New Roman", Times, serif;
+  width: 80%;
+  height: 60%;
 }
- #result {
-        margin-top: 10px;
-    }
 
-     #settings {
-    display: none;
-    transition: all 0.3s;
-    width: 98%;
-    border: 1px solid #ccc;
-    text-align: center;
-    border-radius: 10px;
-    background: white;
-    box-shadow: 0px 3px 6px 0px rgb(0 0 0 / 15%), 0px 2px 4px 0px rgb(0 0 0 / 12%);
-    position: absolute;
-    margin-top: 8vh;
-    z-index: 2;
+#settings {
+  display: none;
+  transition: all 0.3s;
+  width: 98%;
+  border: 1px solid #ccc;
+  text-align: center;
+  border-radius: 10px;
+  background: white;
+  box-shadow: 0px 3px 6px 0px rgb(0 0 0 / 15%), 0px 2px 4px 0px rgb(0 0 0 / 12%);
+  position: absolute;
+  margin-top: 8vh;
+  z-index: 2;
 }
-#settings-button{
-    width:20%;
-}
-#infos{
-background: #d1cbd1;
-    width: 60%;
-    margin: 10px;
-    border-radius: 25px;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-}
-#timer-bar{
-    background: #d1cbd1;
-    width: 20%;
-    margin: 10px;
-    border-radius: 25px;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    font-family: "Times New Roman", Times, serif;
-    
-    font-weight: 600;
-}
-#nav-bar{
-    width:100%;
-    background:black;
-    display:flex;
-}
-    #check-button {    
-    z-index: 1;
-    font-size: 24px;
-    cursor: pointer;
-    background: hsl(210, 25%, 95%);
-    border: none;
-    width: 40px;
-    height: 40px;
-    border-radius: 30px;
-    color: #223968;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 10px;
-}
-input{
-    width: 30px;
-    border-radius: 15px;
-    text-align: center;
-    margin-left:5px;
-    margin-right:5px;
 
-    
-    
+#settings-button {
+  width: 20%;
 }
+
+#infos {
+  background: #d1cbd1;
+  width: 60%;
+  margin: 10px;
+  border-radius: 25px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+#timer-bar {
+  background: #d1cbd1;
+  width: 20%;
+  margin: 10px;
+  border-radius: 25px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  font-family: "Times New Roman", Times, serif;
+  font-weight: 600;
+}
+
+#nav-bar {
+  width: 100%;
+  background: black;
+  display: flex;
+}
+
+#check-button {
+  z-index: 1;
+  font-size: 24px;
+  cursor: pointer;
+  background: hsl(210, 25%, 95%);
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 30px;
+  color: #223968;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+}
+
+input {
+  width: 30px;
+  border-radius: 15px;
+  text-align: center;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
 #digits-div {
-    display: flex;
-    justify-content: center;
-    margin-bottom:10px;
-    margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+  margin-top: 10px;
 }
-    #check-button .fa-bars {
-        cursor: pointer;
-    }
 
-    #check.clicked + #settings {
-        display: block;
-    }
+.number {
+  display: inline-block;
+  height: 40px;
+  text-align: center;
+  font-size: 20px;
+  border: 0px solid black;
+  margin: 5px 6px;
+  cursor: pointer;
 
-        .container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            text-align: center;
-        }
+  font-size: 30px;
+  font-weight: 600;
+  color: black;
+}
 
-        .settings-button {
-            display: block;
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            z-index: 1;
-            font-size: 24px;
-            cursor: pointer;
-        }
+.found {
+  background-color: rgb(205, 218, 50);
+  border-radius: 10px;
+}
 
-        .settings {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            justify-content: center;
-            align-items: center;
-        }
+.disabled {
+  pointer-events: none;
+}
 
-        .settings.active {
-            display: flex;
-        }
+.row {
+  display: flex;
+  justify-content: center;
+}
 
-        .settings-panel {
-            background: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-        }
+.hidden {
+  display: none;
+}
 
-        .number {
-                display: inline-block;
-    height: 40px;
-    text-align: center;
-    font-size: 20px;
-    border: 0px solid black;
-    margin: 5px 6px;
-    cursor: pointer;
-    font-family: "Times New Roman", Times, serif;
-    font-size: 30px;
-    font-weight: 600;
-    color: black;
-        }
-
-        .found {
-           
-            background-color:rgb(205, 218, 50);
-            border-radius: 10px;
-        }
-
-        .disabled {
-            pointer-events: none;
-        }
-
-        .row {
-            display: flex;
-            justify-content: center;
-        }
-
-        #result {
-           
-            text-align: center;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    border: solid;
-    border-color: white;
-    background-color: white;
-    font-size: 30px;
-    font-family: "Times New Roman", Times, serif;
-    width: 80%;
-    height: 60%;
-        }
-
-        .timer-container {
-            position: absolute;
-            bottom: 10px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 24px;
-        }
-
-        .hidden {
-        display: none;
-    }
-    .visible {
-        display: block;
-    }
+.visible {
+  display: block;
+}
